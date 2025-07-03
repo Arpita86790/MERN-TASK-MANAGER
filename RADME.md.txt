@@ -1,0 +1,62 @@
+# MERN Task Manager (MySQL Based)
+
+## Submitted by: Arpita Goyal
+
+##  Overview
+This full-stack MERN project allows users to register, log in, and manage tasks in a Kanban board using drag-and-drop. Backend is built with Node.js + Express, and data is stored using MySQL with Sequelize ORM.
+
+---
+
+## Tech Stack
+- **Frontend**: React, Axios, React Router, react-beautiful-dnd
+- **Backend**: Node.js, Express.js, Sequelize ORM, JWT
+- **Database**: MySQL
+
+---
+
+## Features
+- User registration and login (JWT)
+- Task creation, editing, drag-drop between columns
+- Smart assignment to least loaded user
+- Activity log of task events
+- Dropdowns for priority and user assignment
+
+---
+
+## API Endpoints
+- `POST /api/users/register` – Register user
+- `POST /api/users/login` – Login
+- `GET /api/users` – List users
+- `GET /api/tasks` – List tasks
+- `POST /api/tasks` – Create task
+- `PUT /api/tasks/:id` – Update task
+- `DELETE /api/tasks/:id` – Delete task
+- `POST /api/tasks/smart-assign` – Auto assign to least busy user
+- `GET /api/logs` – View task logs
+
+---
+
+## Folder Structure
+
+```
+Assignment_MERN/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── server.js
+│   └── .env.example
+├── frontend/
+│   ├── src/
+│   └── package.json
+└── README.md
+```
+
+---
+
+## Getting Started
+1. Run MySQL server
+2. Add `.env` with DB and JWT config
+3. Run backend with `nodemon server.js`
+4. Run frontend with `npm start`
