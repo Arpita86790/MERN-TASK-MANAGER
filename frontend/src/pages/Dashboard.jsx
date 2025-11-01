@@ -102,57 +102,161 @@ function Dashboard() {
     }
   };
 
+  // 🎨 Inline Styles
+  const styles = {
+    container: {
+      minHeight: '100vh',
+      padding: '2rem',
+      background: 'linear-gradient(135deg, #ffecd2, #fcb69f)',
+      fontFamily: 'Poppins, sans-serif',
+    },
+    title: {
+      textAlign: 'center',
+      fontSize: '2rem',
+      color: '#333',
+      marginBottom: '1.5rem',
+    },
+    formCard: {
+      backgroundColor: '#fff',
+      padding: '1.5rem',
+      borderRadius: '16px',
+      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+      maxWidth: '1000px',
+      margin: '0 auto 2rem auto',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      gap: '1rem',
+    },
+    input: {
+      padding: '0.7rem 1rem',
+      borderRadius: '8px',
+      border: '1px solid #ccc',
+      fontSize: '1rem',
+      minWidth: '180px',
+    },
+    select: {
+      padding: '0.7rem 1rem',
+      borderRadius: '8px',
+      border: '1px solid #ccc',
+      fontSize: '1rem',
+      minWidth: '160px',
+    },
+    button: {
+      backgroundColor: '#fcb69f',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '0.8rem 1.5rem',
+      cursor: 'pointer',
+      fontWeight: '600',
+      fontSize: '1rem',
+      transition: 'background 0.3s ease',
+    },
+    board: {
+      display: 'flex',
+      justifyContent: 'space-around',
+      flexWrap: 'wrap',
+      gap: '1rem',
+    },
+    column: {
+      width: '30%',
+      minWidth: '280px',
+      backgroundColor: '#fff',
+      borderRadius: '12px',
+      padding: '1rem',
+      boxShadow: '0 3px 12px rgba(0, 0, 0, 0.1)',
+    },
+    columnTitle: {
+      textAlign: 'center',
+      color: '#333',
+      marginBottom: '1rem',
+      fontSize: '1.2rem',
+      fontWeight: '600',
+    },
+    taskCard: {
+      backgroundColor: '#fdfdfd',
+      borderRadius: '10px',
+      padding: '1rem',
+      marginBottom: '0.75rem',
+      boxShadow: '0 1px 5px rgba(0, 0, 0, 0.1)',
+    },
+    logCard: {
+      backgroundColor: '#fff',
+      padding: '1rem',
+      borderRadius: '12px',
+      boxShadow: '0 3px 12px rgba(0, 0, 0, 0.1)',
+      marginTop: '2rem',
+      maxWidth: '1000px',
+      marginInline: 'auto',
+    },
+    logList: {
+      listStyle: 'none',
+      padding: 0,
+      color: '#444',
+    },
+    logItem: {
+      padding: '0.4rem 0',
+      borderBottom: '1px solid #eee',
+    },
+  };
+
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2 style={{ textAlign: 'center' }}>🚀 Task Dashboard (Safe DnD + Smart Assign + Dropdown)</h2>
+    <div style={styles.container}>
+      <h2 style={styles.title}>🚀 Task Dashboard</h2>
 
       {/* Create Task Form */}
-      <form onSubmit={handleCreateTask} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center', marginBottom: '2rem' }}>
-        <input type="text" name="title" placeholder="Title" value={newTask.title} onChange={handleInputChange} required />
-        <input type="text" name="description" placeholder="Description" value={newTask.description} onChange={handleInputChange} required />
+      <form onSubmit={handleCreateTask} style={styles.formCard}>
+        <input type="text" name="title" placeholder="Title" value={newTask.title} onChange={handleInputChange} required style={styles.input} />
+        <input type="text" name="description" placeholder="Description" value={newTask.description} onChange={handleInputChange} required style={styles.input} />
 
-        <select name="status" value={newTask.status} onChange={handleInputChange}>
+        <select name="status" value={newTask.status} onChange={handleInputChange} style={styles.select}>
           {statuses.map((status) => (
             <option key={status} value={status}>{statusMap[status]}</option>
           ))}
         </select>
 
-        <select name="priority" value={newTask.priority} onChange={handleInputChange}>
+        <select name="priority" value={newTask.priority} onChange={handleInputChange} style={styles.select}>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
         </select>
 
-        <select name="assignedUserId" value={newTask.assignedUserId} onChange={handleInputChange}>
+        <select name="assignedUserId" value={newTask.assignedUserId} onChange={handleInputChange} style={styles.select}>
           <option value="">-- Assign User --</option>
           {users.map(user => (
             <option key={user.id} value={user.id}>{user.name}</option>
           ))}
         </select>
 
-        <button type="submit">➕ Create Task</button>
-        <button type="button" onClick={handleSmartAssign}>🤖 Smart Assign</button>
+        <button
+          type="submit"
+          style={styles.button}
+          onMouseOver={(e) => (e.target.style.backgroundColor = '#f7a078')}
+          onMouseOut={(e) => (e.target.style.backgroundColor = '#fcb69f')}
+        >
+          ➕ Create Task
+        </button>
+
+        <button
+          type="button"
+          onClick={handleSmartAssign}
+          style={styles.button}
+          onMouseOver={(e) => (e.target.style.backgroundColor = '#f7a078')}
+          onMouseOut={(e) => (e.target.style.backgroundColor = '#fcb69f')}
+        >
+          🤖 Smart Assign
+        </button>
       </form>
 
       {/* Kanban Board */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <div style={styles.board}>
           {statuses.map((status) => (
             <Droppable droppableId={status} key={status}>
               {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  style={{
-                    width: '30%',
-                    minHeight: '300px',
-                    padding: '1rem',
-                    border: '1px solid #ccc',
-                    borderRadius: '8px',
-                    background: '#f0f0f0'
-                  }}
-                >
-                  <h3 style={{ textAlign: 'center' }}>{statusMap[status]}</h3>
+                <div ref={provided.innerRef} {...provided.droppableProps} style={styles.column}>
+                  <h3 style={styles.columnTitle}>{statusMap[status]}</h3>
                   {getTasksByStatus(status).map((task, index) => (
                     <Draggable draggableId={task.id.toString()} index={index} key={task.id}>
                       {(provided) => (
@@ -160,14 +264,7 @@ function Dashboard() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          style={{
-                            background: '#fff',
-                            padding: '0.75rem',
-                            marginBottom: '0.75rem',
-                            borderRadius: '6px',
-                            boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
-                            ...provided.draggableProps.style
-                          }}
+                          style={{ ...styles.taskCard, ...provided.draggableProps.style }}
                         >
                           <strong>{task.title}</strong>
                           <p>{task.description}</p>
@@ -186,11 +283,11 @@ function Dashboard() {
       </DragDropContext>
 
       {/* Activity Log */}
-      <div style={{ marginTop: '2rem' }}>
+      <div style={styles.logCard}>
         <h3>🕓 Activity Log</h3>
-        <ul>
+        <ul style={styles.logList}>
           {logs.map((log) => (
-            <li key={log.id}>
+            <li key={log.id} style={styles.logItem}>
               {log.action} — <small>{new Date(log.timestamp).toLocaleString()}</small>
             </li>
           ))}
